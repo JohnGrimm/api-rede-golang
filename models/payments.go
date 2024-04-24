@@ -1,9 +1,10 @@
 package models
 
 import (
-	errors2 "api-rede-golang/apierrs"
-	"api-rede-golang/utils"
 	"encoding/json"
+
+	errors2 "github.com/JohnGrimm/api-rede-golang/apierrs"
+	"github.com/JohnGrimm/api-rede-golang/utils"
 )
 
 // Payment Struct of the request to de REDE's API

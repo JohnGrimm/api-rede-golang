@@ -8,11 +8,11 @@ import (
 	"net/http"
 	"strings"
 
-	errors2 "api-rede-golang/apierrs"
-	"api-rede-golang/utils"
+	errors2 "github.com/JohnGrimm/api-rede-golang/apierrs"
+	"github.com/JohnGrimm/api-rede-golang/utils"
 
-	"api-rede-golang/login"
-	"api-rede-golang/models"
+	"github.com/JohnGrimm/api-rede-golang/login"
+	"github.com/JohnGrimm/api-rede-golang/models"
 )
 
 // Rede interface for the Rede's API
