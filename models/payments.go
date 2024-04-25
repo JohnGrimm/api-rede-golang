@@ -44,6 +44,8 @@ type Payment struct {
 	Brand brandPay `json:"brand,omitempty"`
 	// Required for Visa and ELO brands. Optional for card-on-file transactions
 	Sai string `json:"sai,omitempty"`
+	// 0 = Not save, 1 = Save, 2 = Alright saved
+	StorageCard string `json:"storageCard,omitempty"`
 	// if credentialId=1 or 2 and mastercard
 	TransactionCredentials transactionCredential `json:"transactionCredential,omitempty"`
 }
@@ -77,7 +79,8 @@ func (r Payment) ToJSON() ([]byte, error) {
 		Brand: brandPay{
 			BrandTid: r.Brand.BrandTid,
 		},
-		Sai: r.Sai,
+		Sai:         r.Sai,
+		StorageCard: r.StorageCard,
 		TransactionCredentials: transactionCredential{
 			CredentialId: r.TransactionCredentials.CredentialId,
 		},
