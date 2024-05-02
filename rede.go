@@ -19,6 +19,7 @@ import (
 type Rede interface {
 	Pay(p *models.Payment) (*models.Response, error)
 	TestCard(p *models.Payment) (*models.Response, error)
+	Capture(tid string) (*models.Response, error)
 }
 
 type rede struct {
@@ -54,6 +55,31 @@ func (r rede) Pay(req *models.Payment) (*models.Response, error) {
 
 	var parseHeader models.Response
 	err = json.Unmarshal([]byte(body), &parseHeader)
+	if err != nil {
+		return nil, errors2.APIErr(err.Error())
+	}
+
+	if strings.Compare(parseHeader.ReturnCode, "00") != 0 && strings.Compare(parseHeader.ReturnCode, "174") != 0 {
+		err = errors2.APIErr("The payment was not successful!")
+	}
+
+	return &parseHeader, err
+}
+
+// Capture a method to do the payment
+func (r rede) Capture(tid string) (*models.Response, error) {
+
+	body := ""
+	if r.config.IsProduction {
+		_, _, body = doPostRequest(utils.APIBaseURL()+tid, "PUT", []byte(""), r.config)
+
+	} else {
+		_, _, body = doPostRequest(utils.APIBaseURLTest()+tid, "PUT", []byte(""), r.config)
+
+	}
+
+	var parseHeader models.Response
+	err := json.Unmarshal([]byte(body), &parseHeader)
 	if err != nil {
 		return nil, errors2.APIErr(err.Error())
 	}
